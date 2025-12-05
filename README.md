@@ -67,11 +67,19 @@ The project includes a self-documenting landing page. Once running, visit `http:
 
 ### Core Endpoints
 
+> **Note**: All API requests require the `x-api-key` header.
+
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `GET` | `/api/search?q=...` | Search for locations by name. |
 | `GET` | `/api/reverse?lat=...&lon=...` | Find location by coordinates. |
 | `GET` | `/api/children?parent_id=...` | List child locations (e.g., Localities of a Province). |
+
+### Example
+```bash
+curl "https://location-service.carwi.autos/api/search?q=Cordoba" \
+  -H "x-api-key: YOUR_SAFE_KEY"
+```
 
 ## 📄 License
 
