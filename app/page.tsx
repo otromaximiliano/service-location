@@ -8,13 +8,15 @@ export default function Home() {
         {/* Header */}
         <header className="mb-20">
           <div className="inline-block px-3 py-1 mb-6 text-xs font-medium tracking-wide text-zinc-400 uppercase border border-zinc-800 rounded-full bg-zinc-900/50">
-            Microservice
+            <Link href="https://www.carwi.autos" target="_blank" className="hover:text-white transition-colors">
+              carwi services
+            </Link>
           </div>
-          <h1 className="text-5xl font-extrabold tracking-tight text-white mb-6 bg-gradient-to-br from-white to-zinc-500 bg-clip-text text-transparent">
-            Argentina Geolocation API
+          <h1 className="text-6xl font-black tracking-tighter text-white mb-6 lowercase">
+            carwi <span className="text-zinc-500 font-bold">location api</span>
           </h1>
           <p className="text-xl text-zinc-400 leading-relaxed font-light max-w-2xl">
-            A high-performance, minimalist API for querying Argentinian Provinces, Departments, Municipalities, and Localities.
+            The official microservice for managing and querying geolocation data across the <Link href="https://www.carwi.autos" className="text-white font-medium hover:underline decoration-zinc-500 underline-offset-4">carwi.autos</Link> ecosystem.
           </p>
         </header>
 
@@ -63,7 +65,7 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="mt-24 pt-8 border-t border-zinc-900 flex justify-between text-sm text-zinc-600">
-          <p>Service Location v1.0</p>
+          <p className="font-bold lowercase">carwi location service v1.0</p>
           <p>Powered by Next.js & MongoDB</p>
         </footer>
       </main>
