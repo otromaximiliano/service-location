@@ -31,7 +31,7 @@ export default function Home() {
           >
             <Param name="q" type="string" required>Name to search (e.g., 'Cordoba')</Param>
             <CodeBlock>
-              curl "https://location-service.carwi.autos/api/search?q=Cordoba" -H "x-api-key: YOUR_KEY"
+              curl "https://service-location.carwi.autos/api/search?q=Cordoba" -H "x-api-key: YOUR_KEY"
             </CodeBlock>
           </Section>
 
@@ -44,7 +44,7 @@ export default function Home() {
             <Param name="lat" type="float" required>Latitude</Param>
             <Param name="lon" type="float" required>Longitude</Param>
             <CodeBlock>
-              curl "https://location-service.carwi.autos/api/reverse?lat=-31.4201&lon=-64.1888" -H "x-api-key: YOUR_KEY"
+              curl "https://service-location.carwi.autos/api/reverse?lat=-31.4201&lon=-64.1888" -H "x-api-key: YOUR_KEY"
             </CodeBlock>
           </Section>
 
@@ -57,7 +57,7 @@ export default function Home() {
             <Param name="parent_id" type="string" required>Ancestor ID (e.g., '14' for Córdoba)</Param>
             <Param name="category" type="string" optional>Filter (e.g., 'localidad')</Param>
             <CodeBlock>
-              curl "https://location-service.carwi.autos/api/children?parent_id=14&category=localidad" -H "x-api-key: YOUR_KEY"
+              curl "https://service-location.carwi.autos/api/children?parent_id=14&category=localidad" -H "x-api-key: YOUR_KEY"
             </CodeBlock>
           </Section>
 
