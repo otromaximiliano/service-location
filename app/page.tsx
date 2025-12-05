@@ -66,7 +66,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="mt-24 pt-8 border-t border-zinc-900 flex justify-between text-sm text-zinc-600">
           <p className="font-bold lowercase">carwi location service v1.0</p>
-          <p>Powered by Next.js & MongoDB</p>
+          <p>Powered by carwi.autos</p>
         </footer>
       </main>
     </div>
