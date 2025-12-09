@@ -1,4 +1,43 @@
 import Link from "next/link";
+import { CopyContextButton } from "../components/copy-context-button";
+
+const LLM_CONTEXT = `# Carwi Location API Documentation
+
+Base URL: https://service-location.carwi.autos (Production)
+          http://localhost:3000 (Local)
+
+## Endpoints
+
+### 1. Search
+- **GET** \`/api/search?q={name}\`
+- Search for locations by name (fuzzy search).
+- Example: \`/api/search?q=Cordoba\`
+
+### 2. Reverse Geocoding
+- **GET** \`/api/reverse?lat={lat}&lon={lon}\`
+- Find nearest political subdivision.
+- Example: \`/api/reverse?lat=-31.4201&lon=-64.1888\`
+
+### 3. Provinces
+- **GET** \`/api/provincias\`
+- Returns all provinces.
+
+### 4. Municipalities
+- **GET** \`/api/municipios?provincia={provincia_id}\`
+- Returns municipalities.
+- Optional Filter: \`provincia\` (ID).
+
+### 5. Localities
+- **GET** \`/api/localidades\`
+- Returns localities.
+- Optional Filters: \`municipio\` (ID), \`provincia\` (ID).
+
+### 6. Children
+- **GET** \`/api/children?parent_id={id}&category={category}\`
+- Traverse hierarchy.
+
+Note: All requests require 'x-api-key' header if configured.
+`;
 
 export default function Home() {
   return (
@@ -7,10 +46,13 @@ export default function Home() {
 
         {/* Header */}
         <header className="mb-20">
-          <div className="inline-block px-3 py-1 mb-6 text-xs font-medium tracking-wide text-zinc-400 uppercase border border-zinc-800 rounded-full bg-zinc-900/50">
-            <Link href="https://www.carwi.autos" target="_blank" className="hover:text-white transition-colors">
-              carwi services
-            </Link>
+          <div className="flex items-start justify-between">
+            <div className="inline-block px-3 py-1 mb-6 text-xs font-medium tracking-wide text-zinc-400 uppercase border border-zinc-800 rounded-full bg-zinc-900/50">
+              <Link href="https://www.carwi.autos" target="_blank" className="hover:text-white transition-colors">
+                carwi services
+              </Link>
+            </div>
+            <CopyContextButton context={LLM_CONTEXT} />
           </div>
           <h1 className="text-6xl font-black tracking-tighter text-white mb-6 lowercase">
             carwi <span className="text-zinc-500 font-bold">location api</span>
@@ -45,6 +87,42 @@ export default function Home() {
             <Param name="lon" type="float" required>Longitude</Param>
             <CodeBlock>
               curl "https://service-location.carwi.autos/api/reverse?lat=-31.4201&lon=-64.1888" -H "x-api-key: YOUR_KEY"
+            </CodeBlock>
+          </Section>
+
+          <Section
+            title="Provinces"
+            method="GET"
+            path="/api/provincias"
+            desc="List all provinces."
+          >
+            <CodeBlock>
+              curl "https://service-location.carwi.autos/api/provincias" -H "x-api-key: YOUR_KEY"
+            </CodeBlock>
+          </Section>
+
+          <Section
+            title="Municipalities"
+            method="GET"
+            path="/api/municipios"
+            desc="List municipalities, optionally filtered by province."
+          >
+            <Param name="provincia" type="string" optional>Province ID to filter by</Param>
+            <CodeBlock>
+              curl "https://service-location.carwi.autos/api/municipios?provincia=06" -H "x-api-key: YOUR_KEY"
+            </CodeBlock>
+          </Section>
+
+          <Section
+            title="Localities"
+            method="GET"
+            path="/api/localidades"
+            desc="List localities, optionally filtered by municipality or province."
+          >
+            <Param name="municipio" type="string" optional>Municipality ID to filter by</Param>
+            <Param name="provincia" type="string" optional>Province ID to filter by</Param>
+            <CodeBlock>
+              curl "https://service-location.carwi.autos/api/localidades?municipio=060588" -H "x-api-key: YOUR_KEY"
             </CodeBlock>
           </Section>
 
@@ -93,17 +171,33 @@ function Section({ title, method, path, desc, children }: any) {
         </div>
 
         <div className="p-6 sm:p-8">
-          <div className="mb-8">
-            <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Parameters</h3>
-            <div className="space-y-4">
-              {children.filter((child: any) => child.type === Param)}
-            </div>
-          </div>
+          {children && (
+            <div className="mb-0">
+              {Array.isArray(children) && children.some((child: any) => child.type === Param) && (
+                <div className="mb-8">
+                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Parameters</h3>
+                  <div className="space-y-4">
+                    {children.filter((child: any) => child.type === Param)}
+                  </div>
+                </div>
+              )}
 
-          <div>
-            <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">Example Request</h3>
-            {children.filter((child: any) => child.type === CodeBlock)}
-          </div>
+              {/* Handle case where Param is single child */}
+              {!Array.isArray(children) && children.type === Param && (
+                <div className="mb-8">
+                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Parameters</h3>
+                  <div className="space-y-4">
+                    {children}
+                  </div>
+                </div>
+              )}
+
+              <div>
+                <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">Example Request</h3>
+                {Array.isArray(children) ? children.filter((child: any) => child.type === CodeBlock) : (children.type === CodeBlock ? children : null)}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

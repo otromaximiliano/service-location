@@ -73,6 +73,9 @@ The project includes a self-documenting landing page. Once running, visit `http:
 | :--- | :--- | :--- |
 | `GET` | `/api/search?q=...` | Search for locations by name. |
 | `GET` | `/api/reverse?lat=...&lon=...` | Find location by coordinates. |
+| `GET` | `/api/provincias` | List all provinces. |
+| `GET` | `/api/municipios?provincia=...` | List municipalities (filter by province). |
+| `GET` | `/api/localidades?municipio=...` | List localities (filter by municipality or province). |
 | `GET` | `/api/children?parent_id=...` | List child locations (e.g., Localities of a Province). |
 
 ### Example
